@@ -42,7 +42,7 @@ export default function Question(props) {
       return (!answer.isSelected && answer.id !== id) ?
           answer :
          {...answer, isSelected: !answer.isSelected}
-    }))    
+    }))
   }
 
   const answerElements = answers.map(answer => {
@@ -53,6 +53,8 @@ export default function Question(props) {
         isSelected={answer.isSelected}
         isCorrect={answer.isCorrect}
         handleSelection={() => selectAnswer(answer.id)}
+        pointAddition={props.pointAddition}
+        pointDeduction={props.pointDeduction}
         checkStatus={props.hasChecked}
       />
     )

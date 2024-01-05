@@ -6,11 +6,21 @@ export default function Quiz(props) {
   const [pointsCounter, setPointsCounter] = React.useState(0)
   const [hasChecked, setHasChecked] = React.useState(false)
 
-  // function pointsHandler(isCorrect) {
-  //   if(isCorrect) setPointsCounter(prevState => prevState += 1)
-  // }
+  function addPoint() {
+    setPointsCounter(prevState => prevState += 1)
+  }
+
+  function subtractPoint() {
+    setPointsCounter(prevState => prevState -= 1)
+  }
+  
   function checkAnswers() {
-    setHasChecked(prevState => prevState = true)
+    setHasChecked(prevState => !prevState)
+    console.log(pointsCounter)
+  }
+
+  function restartQuiz() {
+    setHasChecked(prevState => prevState = false)
   }
 
   const allQuestions = props.data.map(item => {
@@ -21,7 +31,8 @@ export default function Quiz(props) {
         correctAnswer={item.correct_answer}
         incorrectAnswers={item.incorrect_answers}
         hasChecked={hasChecked}
-        // answerHandler={(isCorrect)=> pointsHandler(isCorrect)}
+        pointAddition={addPoint}
+        pointDeduction={subtractPoint}
       />
     )
   })
