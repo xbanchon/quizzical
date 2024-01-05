@@ -1,11 +1,11 @@
 import React from "react"
 import IntroPage from "./IntroPage"
 import Quiz from "./Quiz"
+import { nanoid } from "nanoid"
 
 export default function App() {
   const [hasStarted, setHasStarted] = React.useState(false)
   const [quizData, setQuizData] = React.useState([]) 
-
 
   React.useEffect(() => {
     console.log("Fetching data")
