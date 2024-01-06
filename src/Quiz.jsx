@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid'
 export default function Quiz(props) {
   const [pointsCounter, setPointsCounter] = React.useState(0)
   const [hasChecked, setHasChecked] = React.useState(false)
-  const [quizQuestions, setQuizQuestions] = React.useState(allNewQuestions(props.data))
+  const [quizQuestions, setQuizQuestions] = React.useState([])
 
   function shuffleAnswers(correctAnswer, incorrectAnswers){
     const shuffledAnswers = allNewAnswers(correctAnswer, incorrectAnswers)
@@ -51,6 +51,10 @@ export default function Quiz(props) {
     return newQuestions
   }
 
+  React.useEffect(() => {
+    setQuizQuestions(allNewQuestions(props.data))
+  },[props.data])
+
   function selectAnswer(id) {
     setQuizQuestions(oldQuizQuestions => {
       for(const item of oldQuizQuestions){
@@ -88,7 +92,7 @@ export default function Quiz(props) {
         question={item.question}
         answers={item.answers}
         hasChecked={hasChecked}
-        handleChange={selectAnswer}
+        // handleChange={selectAnswer}
         pointAddition={addPoint}
         pointDeduction={subtractPoint}
       />
