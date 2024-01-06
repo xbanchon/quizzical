@@ -3,7 +3,7 @@ import Question from './Question'
 import { nanoid } from 'nanoid'
 
 export default function Quiz(props) {
-  const [pointsCounter, setPointsCounter] = React.useState(0)
+  const [score, setScore] = React.useState(0)
   const [hasChecked, setHasChecked] = React.useState(false)
   const [quizQuestions, setQuizQuestions] = React.useState([])
 
@@ -77,20 +77,17 @@ export default function Quiz(props) {
   }
 
   function addPoint() {
-    setPointsCounter(prevState => prevState += 1)
-  }
-
-  function subtractPoint() {
-    setPointsCounter(prevState => prevState -= 1)
+    setScore(oldScore => oldScore += 1)
   }
   
   function checkAnswers() {
-    setHasChecked(prevState => !prevState)
-    console.log(pointsCounter)
+    setHasChecked(oldHasChecked => oldHasChecked = true)
   }
 
-  function restartQuiz() {
-    setHasChecked(prevState => prevState = false)
+  function playAgain() {
+    setScore(oldScore => oldScore = 0)
+    setHasChecked(oldHasChecked => oldHasChecked = false)
+    props.handleRefresh()
   }
 
   const allQuestions = quizQuestions.map(item => {
@@ -102,7 +99,6 @@ export default function Quiz(props) {
         hasChecked={hasChecked}
         handleChange={selectAnswer}
         pointAddition={addPoint}
-        pointDeduction={subtractPoint}
       />
     )
   })
@@ -114,9 +110,9 @@ export default function Quiz(props) {
       <div className="quiz--bottom">
         {
           hasChecked && 
-          <span className="quiz--result">{`You scored ${pointsCounter}/5 correct answers`}</span>
+          <span className="quiz--result">{`You scored ${score}/5 correct answers`}</span>
         }
-        <button className="quiz--button" onClick={checkAnswers}>
+        <button className="quiz--button" onClick={!hasChecked ? checkAnswers : playAgain}>
           {!hasChecked ? "Check Answers" : "Play again" }
         </button>
       </div>

@@ -13,7 +13,6 @@ export default function Question(props) {
         isCorrect={answer.isCorrect}
         handleSelection={() => props.handleChange(answer.id, props.question)}
         pointAddition={props.pointAddition}
-        pointDeduction={props.pointDeduction}
         checkStatus={props.hasChecked}
       />
     )

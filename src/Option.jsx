@@ -13,15 +13,16 @@ export default function Option (props) {
     opacity: props.isCorrect ? "1" : "0.5",
     cursor: "default"
   }
-
-  // if(props.isCorrect && !props.isSelected) {
-  //   console.log("correct selected")
-  //   props.pointAddition()
-  // }
-  // else if (!props.isCorrect && !props.isSelected) {
-  //   console.log("incorrect selected")
-  //   props.pointDeduction()
-  // }
+  
+  React.useEffect(() => {
+    if(props.checkStatus && props.isCorrect && props.isSelected) {
+      console.log("correct selected")
+      props.pointAddition()
+    }
+    else if (props.checkStatus && !props.isCorrect && props.isSelected){
+      console.log("incorrect selected")
+    }
+  },[props.checkStatus])
 
   return (
     <span 
