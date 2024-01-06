@@ -55,16 +55,25 @@ export default function Quiz(props) {
     setQuizQuestions(allNewQuestions(props.data))
   },[props.data])
 
-  function selectAnswer(id) {
-    setQuizQuestions(oldQuizQuestions => {
-      for(const item of oldQuizQuestions){
-        item.answers.map(answer => {
-          return (!answer.isSelected && answer.id !== id) ?
-          answer :
-         {...answer, isSelected: !answer.isSelected}
-        })
-      }
+  function changeAnswerStatus(answerId, answers){
+    // console.log(answers)
+    const newAnswers = answers.map(answer => {
+      return(!answer.isSelected && answer.id !== answerId) ?
+      answer :
+     {...answer, isSelected: !answer.isSelected}
     })
+    // console.log(newAnswers)
+    return newAnswers
+  }
+
+  function selectAnswer(answerId, question) {
+    // console.log("selected answer", answerId, question)
+    setQuizQuestions(oldQuizQuestions => oldQuizQuestions.map(item => {
+        return item.question === question ?
+        {...item, answers: changeAnswerStatus(answerId, item.answers)} :
+        item
+      })
+    )
   }
 
   function addPoint() {
@@ -76,9 +85,8 @@ export default function Quiz(props) {
   }
   
   function checkAnswers() {
-    // setHasChecked(prevState => !prevState)
-    // console.log(pointsCounter)
-    console.log(quizQuestions)
+    setHasChecked(prevState => !prevState)
+    console.log(pointsCounter)
   }
 
   function restartQuiz() {
@@ -92,7 +100,7 @@ export default function Quiz(props) {
         question={item.question}
         answers={item.answers}
         hasChecked={hasChecked}
-        // handleChange={selectAnswer}
+        handleChange={selectAnswer}
         pointAddition={addPoint}
         pointDeduction={subtractPoint}
       />
